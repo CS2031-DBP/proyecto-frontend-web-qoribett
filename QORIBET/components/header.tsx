@@ -84,7 +84,7 @@ export default function Header({ onOpenLogin, onOpenRegister }: HeaderProps) {
             </>
           )}
 
-          {/* Mobile Menu Button */}
+          {/* menu de mobile */}
           <button
             className="md:hidden p-2 text-slate-600 dark:text-slate-400"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

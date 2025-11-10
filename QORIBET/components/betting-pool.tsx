@@ -12,10 +12,13 @@ interface BettingPoolProps {
     odd: number
     type: string
   }>
-  onRemoveBet: (id: string) => void
+  onRemoveBet: (id:  string) => void
 }
 
-export default function BettingPool({ selectedBets, onRemoveBet }: BettingPoolProps) {
+
+
+export default function BettingPool({ selectedBets, onRemoveBet }: BettingPoolProps)
+ {
   const [stake, setStake] = useState<number>(10)
 
   const calculations = useMemo(() => {
