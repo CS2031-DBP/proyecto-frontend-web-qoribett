@@ -17,21 +17,24 @@ export default function AuthModal({
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            if (mode === "login") {
-                await login({ username: username || undefined, email: email || undefined, password });
-            } else {
-                await register({ username: username || undefined, email: email || undefined, password });
-            }
-            onClose?.();
-        } catch (e: any) {
-            setError(e?.response?.data?.message ?? e.message ?? "Auth failed");
-        } finally {
-            setLoading(false);
+    console.log("AuthModal onSubmit called, mode=", mode, { username, email, password });
+    setLoading(true);
+    setError(null);
+    try {
+        if (mode === "login") {
+            await login({ username: username || undefined, email: email || undefined, password });
+        } else {
+            await register({ username: username || undefined, email: email || undefined, password });
         }
-    };
+        onClose?.();
+    } catch (e: any) {
+        console.error("Auth error:", e);
+        setError(e?.response?.data?.message ?? e.message ?? "Auth failed");
+    } finally {
+        setLoading(false);
+    }
+};
+    
 
     return (
         <View style={{ padding: 16 }}>

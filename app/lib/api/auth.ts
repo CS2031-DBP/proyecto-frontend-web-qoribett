@@ -14,27 +14,34 @@ export type RegisterRequest = {
 };
 
 export async function login(payload: LoginRequest) {
-    // POST http://.../api/v1/auth/login
+    console.log("auth.login -> baseURL:", api.defaults.baseURL, "payload:", payload);
     const resp = await api.post("/auth/login", payload);
+    console.log("auth.login resp:", resp.status, resp.data);
     return resp.data as { accessToken: string; refreshToken?: string; user?: any };
 }
 
 export async function register(payload: RegisterRequest) {
-    // POST http://.../api/v1/auth/register
+    console.log("auth.register -> baseURL:", api.defaults.baseURL, "payload:", payload);
     const resp = await api.post("/auth/register", payload);
+    console.log("auth.register resp:", resp.status, resp.data);
     return resp.data as any; // UserDTO
 }
 
 export async function refresh(refreshToken: string) {
-    // Backend expects query param: /auth/refresh?refreshToken=...
+    console.log("auth.refresh -> baseURL:", api.defaults.baseURL, "refreshToken:", refreshToken);
     const resp = await api.post(`/auth/refresh?refreshToken=${encodeURIComponent(refreshToken)}`);
+    console.log("auth.refresh resp:", resp.status, resp.data);
     return resp.data as { accessToken: string; refreshToken?: string };
 }
 
 export async function logout(refreshToken?: string) {
-    // Backend expects query param: /auth/logout?token=...
+    console.log("auth.logout -> baseURL:", api.defaults.baseURL, "refreshToken:", refreshToken);
     if (!refreshToken) {
-        return api.post("/auth/logout");
+        const r = await api.post("/auth/logout");
+        console.log("auth.logout resp:", r.status, r.data);
+        return r;
     }
-    return api.post(`/auth/logout?token=${encodeURIComponent(refreshToken)}`);
+    const r = await api.post(`/auth/logout?token=${encodeURIComponent(refreshToken)}`);
+    console.log("auth.logout resp:", r.status, r.data);
+    return r;
 }
